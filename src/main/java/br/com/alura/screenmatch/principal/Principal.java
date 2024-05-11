@@ -71,18 +71,18 @@ public class Principal {
                 .collect(Collectors.toList());
         episodios.forEach(System.out::println);
 
-        System.out.println("Escolha um episódio");
-        String trechoDoEp = leitura.nextLine();
-
-        Optional<Episodio> episodioEncontrado = episodios.stream()
-                .filter(e -> e.getTituloDoEpisodio().toUpperCase().contains(trechoDoEp.toUpperCase()))
-                .findFirst();
-        if(episodioEncontrado.isPresent()) {
-            System.out.println("Ep encontrado! Temporada: " + episodioEncontrado.get().getTemporada() +
-                    "\n Nome do ep: " + episodioEncontrado.get().getTituloDoEpisodio());
-        } else {
-            System.out.println("Ep não encontrado!");
-        }
+//        System.out.println("Escolha um episódio");
+//        String trechoDoEp = leitura.nextLine();
+//
+//        Optional<Episodio> episodioEncontrado = episodios.stream()
+//                .filter(e -> e.getTituloDoEpisodio().toUpperCase().contains(trechoDoEp.toUpperCase()))
+//                .findFirst();
+//        if(episodioEncontrado.isPresent()) {
+//            System.out.println("Ep encontrado! Temporada: " + episodioEncontrado.get().getTemporada() +
+//                    "\n Nome do ep: " + episodioEncontrado.get().getTituloDoEpisodio());
+//        } else {
+//            System.out.println("Ep não encontrado!");
+//        }
 
 //
 //        System.out.println("A partir de que ano você deseja ver os episódios?");
@@ -99,5 +99,11 @@ public class Principal {
 //                                "Episódio: " + e.getTituloDoEpisodio() +
 //                                "Data de Lançamento: " + e.getDataDeLancamentoDoEpisodio().format(formatador)
 //                ));
+
+            Map<Integer, Double> avaliacoesPorTemporada = episodios.stream()
+                    .filter(e -> e.getAvaliacaoDoEpisodio() > 0)
+                    .collect(Collectors.groupingBy(Episodio::getTemporada,
+                            Collectors.averagingDouble(Episodio::getAvaliacaoDoEpisodio)));
+        System.out.println(avaliacoesPorTemporada);
     }
 }
