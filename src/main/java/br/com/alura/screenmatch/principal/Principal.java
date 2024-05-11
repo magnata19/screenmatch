@@ -104,6 +104,13 @@ public class Principal {
                     .filter(e -> e.getAvaliacaoDoEpisodio() > 0)
                     .collect(Collectors.groupingBy(Episodio::getTemporada,
                             Collectors.averagingDouble(Episodio::getAvaliacaoDoEpisodio)));
-        System.out.println(avaliacoesPorTemporada);
+            System.out.println(avaliacoesPorTemporada);
+
+        DoubleSummaryStatistics est = episodios.stream()
+                .filter(e -> e.getAvaliacaoDoEpisodio() > 0)
+                .collect(Collectors.summarizingDouble(Episodio::getAvaliacaoDoEpisodio));
+        System.out.println("Nota média da série: " + est.getAverage() +
+                "\n Nota mínima da série: " + est.getMin() +
+                "\n Nota Máxima da série: " + est.getMax());
     }
 }
